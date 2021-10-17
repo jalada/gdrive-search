@@ -18,3 +18,4 @@ yup-oauth2 = "^5.0"
 tokio = { version = "1", features = ["full"] }
 chrono = "*"
 async-recursion = "*"
+regex = "*"

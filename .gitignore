@@ -2,3 +2,6 @@
 # Temporary while I mess around
 clientsecret.json
 tokencache.json
+# Also temporary until they go into a nice friendly folder
+LAST_FETCHED
+files.json
