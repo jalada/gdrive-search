@@ -46,6 +46,8 @@ async fn main() {
 
     // When did we last update the files?
     let last_fetched = get_last_fetched();
+    // TODO: Urgh, passing around Vec<DriveFile> all the time is feeling
+    // painful.
     let files: Vec<DriveFile> = if let Some(timestamp) = last_fetched {
         // Is it recent enough?
         if timestamp < Utc::now() - Duration::minutes(REFRESH_MINUTES) {
@@ -77,6 +79,8 @@ fn find_files_matching(query: &str, files: Vec<DriveFile>) -> Vec<DriveFile> {
 
     for file in files {
         if needle.is_match(&file.name) {
+            // This feels so wrong, because I'm scared of Rust ownership
+            // & borrowing, and am just pretending like it's not a thing.
             results.push(file);
         }
     }
