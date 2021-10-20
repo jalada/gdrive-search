@@ -18,10 +18,16 @@ My basic idea is:
     - or maybe Google Drive have a streaming API I can use?)
     - *UPDATE* now I'm using skim, can I send skim the latest files and then
       add some more to it afterwards or something?
- - Do a fairly straightforward substring search (always seemed to work OK for
-   me)
  - Some kind of interface where you can do these searches and choose a file
    and open it. For now I've gone with [skim](https://github.com/lotabout/skim).
+   
+## What works?
+
+ - Sign in with Google Drive (if you follow setup below).
+ - Sync files & folders (currently fetches everything, every 30 minutes) and
+   save to file.
+ - Interface for searching for file/folders.
+ - Open chosen file/folder in your web browser.
 
 # Google Drive API setup notes.
 
