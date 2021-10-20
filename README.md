@@ -48,3 +48,4 @@ Many things, including:
    thread 'main' panicked at 'Request failed when syncing file list', src/main.rs:201:47
    note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
    ```
+- [ ] Opening files seems to pick the right Google account, but opening folders...doesn't?!
