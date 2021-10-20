@@ -1,13 +1,18 @@
+extern crate async_recursion;
+extern crate chrono;
 extern crate google_drive3 as drive3;
 extern crate hyper;
 extern crate hyper_rustls;
+extern crate serde;
+extern crate skim;
+extern crate webbrowser;
 use async_recursion::async_recursion;
 use chrono::{DateTime, Duration, FixedOffset, Utc};
 use drive3::Error;
 use drive3::{oauth2, DriveHub};
 use oauth2::{InstalledFlowAuthenticator, InstalledFlowReturnMethod};
-use regex::RegexBuilder;
 use serde::{Deserialize, Serialize};
+use skim::prelude::*;
 use std::error;
 use std::fs::File;
 use std::io::prelude::*;
@@ -18,6 +23,17 @@ const REFRESH_MINUTES: i64 = 30;
 struct DriveFile {
     name: String,
     modified_time: DateTime<FixedOffset>,
+    web_view_link: String,
+}
+
+impl SkimItem for DriveFile {
+    fn text(&self) -> Cow<str> {
+        Cow::Borrowed(&self.name)
+    }
+
+    fn output(&self) -> Cow<str> {
+        Cow::Borrowed(&self.web_view_link)
+    }
 }
 
 impl DriveFile {
@@ -26,6 +42,7 @@ impl DriveFile {
         // better error handling later (e.g. raise some exception and then
         // further down choose to ignore).
         DriveFile {
+            web_view_link: file.web_view_link.unwrap(),
             name: file.name.unwrap(),
             modified_time: DateTime::parse_from_rfc3339(&file.modified_time.unwrap()).unwrap(),
         }
@@ -34,16 +51,6 @@ impl DriveFile {
 
 #[tokio::main]
 async fn main() {
-    let args: Vec<String> = std::env::args().collect();
-    if args.len() < 2 {
-        eprintln!("Missing argument");
-        std::process::exit(1);
-    }
-
-    // TODO: Apparently you're a bad Rust person for using clone().
-    // <https://doc.rust-lang.org/book/ch13-03-improving-our-io-project.html>
-    let query = args[1].clone();
-
     // When did we last update the files?
     let last_fetched = get_last_fetched();
     // TODO: Urgh, passing around Vec<DriveFile> all the time is feeling
@@ -63,29 +70,33 @@ async fn main() {
         update_files().await.unwrap()
     };
 
-    // Time to hunt for a file!
-    let results = find_files_matching(&query, files);
-
-    println!("{:?}", results);
-}
-
-fn find_files_matching(query: &str, files: Vec<DriveFile>) -> Vec<DriveFile> {
-    let mut results: Vec<DriveFile> = Vec::new();
-
-    let needle = RegexBuilder::new(&regex::escape(query))
-        .case_insensitive(true)
+    let options = SkimOptionsBuilder::default()
+        .tiebreak(Some("index".to_string()))
         .build()
-        .expect("Bad Regex");
+        .unwrap();
 
+    // This is a bit hacky for now
+    let (tx_item, rx_item): (SkimItemSender, SkimItemReceiver) = unbounded();
     for file in files {
-        if needle.is_match(&file.name) {
-            // This feels so wrong, because I'm scared of Rust ownership
-            // & borrowing, and am just pretending like it's not a thing.
-            results.push(file);
-        }
+        let _ = tx_item.send(Arc::new(file));
+    }
+    drop(tx_item);
+
+    let skim_output = Skim::run_with(&options, Some(rx_item));
+
+    // This check then use feels un-Rusty
+    if skim_output.as_ref().unwrap().is_abort {
+        std::process::exit(1);
     }
 
-    results
+    let selected_items = skim_output
+        .map(|out| out.selected_items)
+        .unwrap_or_else(Vec::new);
+
+    for item in selected_items.iter() {
+        // There will only be one.
+        webbrowser::open(&item.output());
+    }
 }
 
 // https://doc.rust-lang.org/rust-by-example/error/multiple_error_types.html
@@ -167,7 +178,12 @@ async fn fetch_files(
         .spaces("drive")
         .page_size(1000)
         .include_items_from_all_drives(true)
-        .param("fields", "nextPageToken, files(name, modifiedTime)");
+        // Order results most recent first so FZF prioritises those.
+        .order_by("modifiedTime desc")
+        .param(
+            "fields",
+            "nextPageToken, files(webViewLink, name, modifiedTime)",
+        );
 
     if let Some(token) = page_token {
         result = result.page_token(&token);

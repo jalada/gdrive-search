@@ -16,13 +16,12 @@ My basic idea is:
     - do a quick sync when using the CLI tool if the sync is out of date,
     - though I might prefer to do this as some background task or something,
     - or maybe Google Drive have a streaming API I can use?)
+    - *UPDATE* now I'm using skim, can I send skim the latest files and then
+      add some more to it afterwards or something?
  - Do a fairly straightforward substring search (always seemed to work OK for
    me)
  - Some kind of interface where you can do these searches and choose a file
-   and open it. I'm wondering if I can just talk 
-   [dmenu](https://tools.suckless.org/dmenu/).
-    - By interface I don't necessarily mean graphical. I'm hoping that this 
-      is the lower level command that can be piped into something else.
+   and open it. For now I've gone with [skim](https://github.com/lotabout/skim).
 
 # Google Drive API setup notes.
 
@@ -31,3 +30,15 @@ My basic idea is:
  - Setup oauth consent screen
  - Create a new oauth client ID
  - Download the JSON provided and put it in <TBD>
+
+# TODO
+
+Many things, including:
+
+- [ ] Doesn't give a friendly error when file list request fails:
+
+   ```
+   Never fetched files before, fetching again
+   thread 'main' panicked at 'Request failed when syncing file list', src/main.rs:201:47
+   note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+   ```
