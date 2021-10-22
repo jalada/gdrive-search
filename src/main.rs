@@ -97,6 +97,8 @@ async fn main() {
         // There will only be one.
         match webbrowser::open(&item.output()) {
             Ok(_) => {
+                // Could be related to
+                // https://github.com/amodm/webbrowser-rs/issues/18
                 std::thread::sleep(std::time::Duration::from_millis(500));
                 std::process::exit(0)
             }
