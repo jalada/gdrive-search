@@ -95,7 +95,13 @@ async fn main() {
 
     for item in selected_items.iter() {
         // There will only be one.
-        webbrowser::open(&item.output());
+        match webbrowser::open(&item.output()) {
+            Ok(_) => {
+                std::thread::sleep(std::time::Duration::from_millis(500));
+                std::process::exit(0)
+            }
+            Err(_) => std::process::exit(1),
+        }
     }
 }
 
