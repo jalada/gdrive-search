@@ -41,3 +41,5 @@ My basic idea is:
 Many things, including:
 
 - [ ] Opening files seems to pick the right Google account, but opening folders...doesn't?!
+- [ ] Not properly storing files.json and LAST_FETCHED in a good place.
+- [ ] No good place for oauth JSON file.
