@@ -10,16 +10,6 @@ that synchronised filesystem to quickly search & open Drive files. But I
 haven't found an equivalent super-fast autocompleting search & open for Linux
 so I decided to build one.
 
-My basic idea is:
-
- - Sync files regularly 
-    - I think I'm doing an incremental sync OK. But I'm just using modified 
-      time and I'm wondering...does a freshly shared file count as modified?
-    - *UPDATE* now I'm using skim, can I send skim the latest files and then
-      add some more to it afterwards or something?
- - Some kind of interface where you can do these searches and choose a file
-   and open it. For now I've gone with [skim](https://github.com/lotabout/skim).
-   
 ## What works?
 
  - Sign in with Google Drive (if you follow setup below).
