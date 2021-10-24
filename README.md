@@ -13,9 +13,8 @@ so I decided to build one.
 My basic idea is:
 
  - Sync files regularly 
-    - do a quick sync when using the CLI tool if the sync is out of date,
-    - though I might prefer to do this as some background task or something,
-    - or maybe Google Drive have a streaming API I can use?)
+    - I think I'm doing an incremental sync OK. But I'm just using modified 
+      time and I'm wondering...does a freshly shared file count as modified?
     - *UPDATE* now I'm using skim, can I send skim the latest files and then
       add some more to it afterwards or something?
  - Some kind of interface where you can do these searches and choose a file
@@ -41,11 +40,4 @@ My basic idea is:
 
 Many things, including:
 
-- [ ] Doesn't give a friendly error when file list request fails:
-
-   ```
-   Never fetched files before, fetching again
-   thread 'main' panicked at 'Request failed when syncing file list', src/main.rs:201:47
-   note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
-   ```
 - [ ] Opening files seems to pick the right Google account, but opening folders...doesn't?!
