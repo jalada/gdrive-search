@@ -23,7 +23,7 @@ My basic idea is:
 ## What works?
 
  - Sign in with Google Drive (if you follow setup below).
- - Sync files & folders (currently fetches everything, every 30 minutes) and
+ - Sync files & folders (currently fetches incrementally, every 5 minutes) and
    save to file.
  - Interface for searching for file/folders.
  - Open chosen file/folder in your web browser.

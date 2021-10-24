@@ -13,7 +13,7 @@ use crate::drive_files::DriveFiles;
 extern crate skim;
 use skim::prelude::*;
 
-const REFRESH_MINUTES: i64 = 1;
+const REFRESH_MINUTES: i64 = 5;
 
 #[tokio::main]
 async fn main() {
