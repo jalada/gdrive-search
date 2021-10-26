@@ -3,4 +3,4 @@ direct messages / encrypted channels:
 
  - Matrix: @jalada:hvn.network
  - [Fediverse](https://fediverse.party/) (direct message): jalada@fed.hvn.network
- - Twitter (direct message): @jalada
+ - Twitter (direct message): [@jalada](https://twitter.com/jalada)
