@@ -2,7 +2,7 @@
 
 **Warning: I used this to learn Rust. It might be the worst Rust ever.**
 
-Fifty percent learning Rust, fifty percent building a CLI to v. quickly
+Fifty percent learning Rust, fifty percent building a CLI to very quickly
 search & access files in your Google Drive.
 
 On my Mac I had the Google Drive desktop app, and an Alfred workflow to use
