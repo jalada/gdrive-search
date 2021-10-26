@@ -2,6 +2,7 @@ extern crate google_drive3 as drive;
 extern crate serde;
 extern crate skim;
 
+use crate::config::config_path;
 use async_recursion::async_recursion;
 use chrono::{DateTime, FixedOffset, Utc};
 use drive3::Error;
@@ -69,7 +70,7 @@ impl DriveFiles {
     // You could improve this by defining a custom error type. Boxing is a bit
     // of a cheat and not really great 'cos it's dynamic.
     pub fn load_from_disk() -> Result<Self, Box<dyn error::Error>> {
-        let mut f = File::open("files.json")?;
+        let mut f = File::open(config_path("files.json"))?;
         let mut buf = vec![];
         f.read_to_end(&mut buf)?;
         let files: Vec<DriveFile> = serde_json::from_slice(&buf)?;
@@ -77,7 +78,7 @@ impl DriveFiles {
     }
 
     pub fn last_fetched() -> Option<DateTime<Utc>> {
-        if let Ok(mut f) = File::open("LAST_FETCHED") {
+        if let Ok(mut f) = File::open(config_path("LAST_FETCHED")) {
             let mut buf = vec![];
             if f.read_to_end(&mut buf).is_ok() {
                 if let Ok(last_fetched) = serde_json::from_slice(&buf) {
@@ -92,16 +93,16 @@ impl DriveFiles {
         mut self,
         modified_since: Option<DateTime<Utc>>,
     ) -> std::io::Result<Self> {
+        let path: std::path::PathBuf = config_path("clientsecret.json");
         // See <https://docs.rs/yup-oauth2/6.0.0/yup_oauth2/>
         // TODO: Hunt for this file in the right places.
-        let secret: oauth2::ApplicationSecret =
-            yup_oauth2::read_application_secret("clientsecret.json")
-                .await
-                .expect("clientsecret.json");
+        let secret: oauth2::ApplicationSecret = yup_oauth2::read_application_secret(&path)
+            .await
+            .unwrap_or_else(|_| panic!("Missing {}", path.to_string_lossy()));
         // TODO: Save this file in the right places.
         let auth =
             InstalledFlowAuthenticator::builder(secret, InstalledFlowReturnMethod::HTTPRedirect)
-                .persist_tokens_to_disk("tokencache.json")
+                .persist_tokens_to_disk(config_path("tokencache.json"))
                 .build()
                 .await
                 .unwrap();
@@ -115,12 +116,12 @@ impl DriveFiles {
         self.fetch_files(hub, modified_since, None).await;
 
         // Serialize
-        let mut f = File::create("files.json")?;
+        let mut f = File::create(config_path("files.json"))?;
         let buf = serde_json::to_vec(&self.files)?;
         f.write_all(&buf)?;
 
         // Record timestamp of this fetch
-        let mut f = File::create("LAST_FETCHED")?;
+        let mut f = File::create(config_path("LAST_FETCHED"))?;
         let buf = serde_json::to_vec(&Utc::now().to_rfc3339())?;
         f.write_all(&buf)?;
         Ok(self)

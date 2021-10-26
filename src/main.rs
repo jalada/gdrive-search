@@ -7,6 +7,7 @@ extern crate webbrowser;
 use chrono::{Duration, Utc};
 use std::io::prelude::*;
 
+mod config;
 mod drive_files;
 use crate::drive_files::DriveFiles;
 
@@ -17,15 +18,19 @@ const REFRESH_MINUTES: i64 = 5;
 
 #[tokio::main]
 async fn main() {
+    // Set up configuration directory first, if it doesn't already exist
+    match config::setup() {
+        Ok(_) => {}
+        Err(msg) => panic!("{}", msg),
+    }
+
     // When did we last update the files?
     let last_fetched = DriveFiles::last_fetched();
     let files: DriveFiles = if let Some(timestamp) = last_fetched {
         // Is it recent enough?
         if timestamp < Utc::now() - Duration::minutes(REFRESH_MINUTES) {
             print!("Cache of files is old. Fetching again ");
-            std::io::stdout()
-                .flush()
-                .unwrap();
+            std::io::stdout().flush().unwrap();
             let result = DriveFiles::load_from_disk()
                 .unwrap_or_else(|_| panic!("Couldn't load files from disk"))
                 .update_from_gdrive(last_fetched)
