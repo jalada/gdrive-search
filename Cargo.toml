@@ -9,6 +9,9 @@ license = "GPL-3.0"
 keywords = ["google", "cli", "search", "tui", "drive"]
 categories = ["command-line-utilities", "filesystem"]
 edition = "2018"
+exclude = [
+  "docs/*",
+]
 
 [dependencies]
 google-drive3 = "*"
