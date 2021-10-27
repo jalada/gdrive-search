@@ -1,4 +1,4 @@
-# gdrive_search
+# gdrive-search
 
 **Warning: I used this to learn Rust. It might be the worst Rust ever.**
 
@@ -38,9 +38,9 @@ use the Google Drive API.
    
    |Platform | Value                                                             | Example                                                      |
    |---------|-----------------------------------                                |--------------------------------------------------------------|
-   |Linux    | $XDG_CONFIG_HOME or $HOME/.config/gdrive_search/clientsecret.json | /home/alice/.config/gdrive_search/clientsecret.json              |
-   |macOS    | $HOME/Library/Preferences/gdrive_search/clientsecret.json         | /Users/Alice/Library/Preferences/gdrive_search/clientsecret.json |
-   |Windows  | {FOLDERID_RoamingAppData}\gdrive_search\clientsecret.json         | C:\Users\Alice\AppData\Roaming\gdrive_search\clientsecret.json   |
+   |Linux    | $XDG_CONFIG_HOME or $HOME/.config/gdrive-search/clientsecret.json | /home/alice/.config/gdrive-search/clientsecret.json              |
+   |macOS    | $HOME/Library/Preferences/gdrive-search/clientsecret.json         | /Users/Alice/Library/Preferences/gdrive-search/clientsecret.json |
+   |Windows  | {FOLDERID_RoamingAppData}\gdrive-search\clientsecret.json         | C:\Users\Alice\AppData\Roaming\gdrive-search\clientsecret.json   |
 
 # Roadmap
 

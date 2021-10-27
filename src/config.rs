@@ -3,7 +3,7 @@ use dirs::config_dir;
 use std::fs;
 use std::path::PathBuf;
 
-const CONFIG_DIR: &str = "gdrive_search";
+const CONFIG_DIR: &str = "gdrive-search";
 
 pub fn setup() -> std::io::Result<()> {
     // Make sure we can create (or there exists) a configuration directory

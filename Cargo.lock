@@ -493,7 +493,7 @@ dependencies = [
 ]
 
 [[package]]
-name = "gdrive_search"
+name = "gdrive-search"
 version = "0.1.0"
 dependencies = [
  "async-recursion",
