@@ -1,9 +1,14 @@
 [package]
 name = "gdrive-search"
 version = "0.1.0"
+description = "A TUI to quickly find files in your Google Drive"
+homepage = "https://github.com/jalada/gdrive-search"
+repository = "https://github.com/jalada/gdrive-search"
+readme = "README.md"
+license = "GPL-3.0"
+keywords = ["google", "cli", "search", "tui", "drive"]
+categories = ["command-line-utilities", "filesystem"]
 edition = "2018"
-
-# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
 google-drive3 = "*"
