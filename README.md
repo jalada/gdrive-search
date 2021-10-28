@@ -1,5 +1,7 @@
 # gdrive-search
 
+![Crates.io](https://img.shields.io/crates/v/gdrive-search)
+
 **Warning: I used this to learn Rust. It might be the worst Rust ever.**
 
 Fifty percent learning Rust, fifty percent building a CLI to very quickly
