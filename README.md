@@ -2,7 +2,8 @@
 
 ![Crates.io](https://img.shields.io/crates/v/gdrive-search)
 
-**Warning: I used this to learn Rust. It might be the worst Rust ever.**
+**Warning: I used this to learn Rust. It might be the worst Rust ever.
+Feedback to help me learn is very welcome!**
 
 Fifty percent learning Rust, fifty percent building a CLI to very quickly
 search & access files in your Google Drive.
@@ -26,7 +27,18 @@ _Hitting enter would then open in your browser_
  - Interface for searching for file/folders.
  - Open chosen file/folder in your web browser.
 
-# Google Drive API setup notes.
+## How do I get it?
+
+Download [a release from GitHub](https://github.com/jalada/gdrive-search/releases)
+if there is one for your platform.
+
+Or if you have Rust installed you can download and compile it from Cargo:
+
+```
+$ cargo install gdrive-search
+```
+
+## Google Drive API application setup
 
 This dance will be familiar if you've used any other open source tools that
 use the Google Drive API.
@@ -44,7 +56,7 @@ use the Google Drive API.
    |macOS    | $HOME/Library/Preferences/gdrive-search/clientsecret.json         | /Users/Alice/Library/Preferences/gdrive-search/clientsecret.json |
    |Windows  | {FOLDERID_RoamingAppData}\gdrive-search\clientsecret.json         | C:\Users\Alice\AppData\Roaming\gdrive-search\clientsecret.json   |
 
-# Roadmap
+## Roadmap
 
  - Some indication of what type of file/folder each entry is.
  - Can we fetch in the background whilst skim loads to make it even faster?
