@@ -29,10 +29,20 @@ _Hitting enter would then open in your browser_
 
 ## How do I get it?
 
+### Binaries
+
 Download [a release from GitHub](https://github.com/jalada/gdrive-search/releases)
 if there is one for your platform.
 
-Or if you have Rust installed you can download and compile it from Cargo:
+### Arch Linux (including Manjaro etc.)
+
+gdrive-search can be built from source via the
+[AUR](https://aur.archlinux.org/packages/gdrive-search/).
+
+### From source
+
+If you have Rust installed you can download and compile gdrive-search from
+Cargo:
 
 ```
 $ cargo install gdrive-search
@@ -55,6 +65,17 @@ use the Google Drive API.
    |Linux    | $XDG_CONFIG_HOME or $HOME/.config/gdrive-search/clientsecret.json | /home/alice/.config/gdrive-search/clientsecret.json              |
    |macOS    | $HOME/Library/Preferences/gdrive-search/clientsecret.json         | /Users/Alice/Library/Preferences/gdrive-search/clientsecret.json |
    |Windows  | {FOLDERID_RoamingAppData}\gdrive-search\clientsecret.json         | C:\Users\Alice\AppData\Roaming\gdrive-search\clientsecret.json   |
+
+## Releasing a new version
+
+1. Tag the release on Github.
+2. Wait for Github Actions to cross compile everything.
+3. Update the release notes.
+4. Update the [AUR repository](https://aur.archlinux.org/packages/gdrive-search/)
+   PKGBUILD.
+5. Test the PKGBUILD (ideally in a clean `archlinux:base-devel` docker
+   container).
+6. Follow the [AUR release instructions](https://wiki.archlinux.org/title/AUR_submission_guidelines#Publishing_new_package_content).
 
 ## Roadmap
 
