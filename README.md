@@ -48,6 +48,13 @@ Cargo:
 $ cargo install gdrive-search
 ```
 
+### Windows support
+
+Windows is currently not supported because gdrive-search depends on
+[skim](https://github.com/lotabout/skim) which depends on
+[tuikit](https://github.com/lotabout/tuikit) which [doesn't support
+Windows](https://github.com/lotabout/tuikit/issues?q=windows).
+
 ## Google Drive API application setup
 
 This dance will be familiar if you've used any other open source tools that
@@ -64,7 +71,6 @@ use the Google Drive API.
    |---------|-----------------------------------                                |--------------------------------------------------------------|
    |Linux    | $XDG_CONFIG_HOME or $HOME/.config/gdrive-search/clientsecret.json | /home/alice/.config/gdrive-search/clientsecret.json              |
    |macOS    | $HOME/Library/Preferences/gdrive-search/clientsecret.json         | /Users/Alice/Library/Preferences/gdrive-search/clientsecret.json |
-   |Windows  | {FOLDERID_RoamingAppData}\gdrive-search\clientsecret.json         | C:\Users\Alice\AppData\Roaming\gdrive-search\clientsecret.json   |
 
 ## Releasing a new version
 
