@@ -55,6 +55,12 @@ Windows is currently not supported because gdrive-search depends on
 [tuikit](https://github.com/lotabout/tuikit) which [doesn't support
 Windows](https://github.com/lotabout/tuikit/issues?q=windows).
 
+### [Alfred](https://www.alfredapp.com/) workflow
+
+In the [docs](docs/) folder there is an Alfred workflow which you can install
+if you have the Alfred powerpack. It runs `gdrive-search` in a terminal when
+you press the hotkey (cmd+D) and then closes the terminal.
+
 ## Google Drive API application setup
 
 This dance will be familiar if you've used any other open source tools that
